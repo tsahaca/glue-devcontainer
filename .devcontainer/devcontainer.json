@@ -1,0 +1,35 @@
+{
+	"name": "Glue Devcontainer",
+	"build": {
+		// Dockerfile that specific our dev environment.
+		"dockerfile": "./Dockerfile",
+		// context is the project folder that is mounted in the devcontainer.
+		"context": "..",
+	},
+    "containerEnv": {
+        "DISABLE_SSL": "true"
+    },
+	// settings.json file for your workspace.
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"python.defaultInterpreterPath": "/usr/bin/python3",
+		"python.analysis.extraPaths": [
+			"/home/glue_user/aws-glue-libs/PyGlue.zip:/home/glue_user/spark/python/lib/py4j-0.10.9-src.zip:/home/glue_user/spark/python/",
+		]
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [4040, 18080],
+
+	// mount local folders that you need in the remote container.
+	"mounts": [
+		 "source=${localEnv:HOME}/.aws,target=/home/glue_user/.aws,type=bind,consistency=cached",
+		 "source=${localEnv:HOME}/.ssh,target=/home/glue_user/.ssh,type=bind,consistency=cached"
+	  ]
+}
